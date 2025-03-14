@@ -1,0 +1,20 @@
+jobs:
+  terraform:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Login to Azure
+        run: az login --identity || az login --use-device-code
+
+      - name: Set Subscription
+        run: az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
+        working-directory: ./terraform
