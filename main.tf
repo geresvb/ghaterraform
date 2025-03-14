@@ -3,8 +3,13 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "terraform-rg"
+  name     = "Terraform_Infrastructure"
   location = "East US"
+  tags = {
+    Tower   = "Wintel"
+    Owner   = "ValdesG"
+    project = "Terraform"
+  }
 }
 
 resource "azurerm_virtual_network" "vnet" {
