@@ -17,7 +17,7 @@ jobs:
         run: |
           az login --identity || az login --use-device-code
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
+
       - name: Create SSH Key File
         run: |
           mkdir -p ~/.ssh
@@ -40,5 +40,7 @@ jobs:
         working-directory: ${{ github.workspace }}/terraform
 
       - name: Apply Terraform Deployment
-        run: terraform apply -auto-approve
-        working-directory: ${{ github.workspace }}/terraform
+        run: terraform apply -auto-approve \
+              -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
+              -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}"
+        working-directory: ${{ github.workspace }}//terraform
